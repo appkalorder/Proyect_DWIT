@@ -1,4 +1,7 @@
 ---
+import '../styles/global.css';
+
+import LineChart from '../components/LineChart.jsx';
 import "@styles/global.css";
 import Header from "@components/Header.astro";
 import Panel from "@components/PanelBody.astro";
@@ -266,7 +269,7 @@ import measurements from "@data/measurements.json";
 
           <div class="sm:w-1/2 lg:w-3/5 w-full">
             <Panel>
-              <p>Contenido del segundo panel</p>
+              <LineChart client:load />
             </Panel>
           </div>
         </main>
