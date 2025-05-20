@@ -11,9 +11,6 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-<<<<<<< HEAD
   integrations: [react()]
-=======
   
->>>>>>> 41b4705aac179114df8e7b4411947a5dad364bec
 });
