@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Panel from '../components/PanelBody.astro';
+import LineChart from '../components/LineChart.jsx';
 ---
 
 <!DOCTYPE html>
@@ -88,13 +89,11 @@ import Panel from '../components/PanelBody.astro';
             <!-- Contenido de la página -->
             <main class="p-4 mt-4 sm:mt-8 flex flex-wrap">
                 <Header />
-
                 <Panel>
                     <p>Contenido del primer panel</p>
                 </Panel>
-                
                 <Panel>
-                    <p>Contenido del segundo panel</p>
+                    <LineChart client:load />
                 </Panel>
             </main>
         </div>
