@@ -1,19 +1,27 @@
 ---
+<<<<<<< HEAD
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Panel from '../components/PanelBody.astro';
 import LineChart from '../components/LineChart.jsx';
+=======
+import "@styles/global.css";
+import Header from "@components/Header.astro";
+import Panel from "@components/PanelBody.astro";
+import measurements from "@data/measurements.json";
+>>>>>>> 41b4705aac179114df8e7b4411947a5dad364bec
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FitTracker</title>
-</head>
-<body class="transition-colors duration-200">
+  </head>
+  <body class=" duration-200">
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+<<<<<<< HEAD
         <!-- Sidebar -->
         <aside 
             id="sidebar"
@@ -96,35 +104,332 @@ import LineChart from '../components/LineChart.jsx';
                     <LineChart client:load />
                 </Panel>
             </main>
+=======
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed top-0 left-0 z-40 w-48 h-screen transition-transform duration-300 ease-in-out -translate-x-full sm:translate-x-0"
+      >
+        <div
+          class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700"
+        >
+          <a href="/" class="flex items-center mb-5 pl-2.5 group">
+            <span
+              class="self-center text-xl font-semibold whitespace-nowrap dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-300"
+            >
+              FitTracker
+            </span>
+          </a>
+          <ul class="space-y-2 font-medium">
+            <li>
+              <a
+                href="/"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"
+              >
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 -0.5 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="text-gray-900 dark:text-gray-400"
+                  ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.918 10.0005H7.082C6.66587 9.99708 6.26541 10.1591 5.96873 10.4509C5.67204 10.7427 5.50343 11.1404 5.5 11.5565V17.4455C5.5077 18.3117 6.21584 19.0078 7.082 19.0005H9.918C10.3341 19.004 10.7346 18.842 11.0313 18.5502C11.328 18.2584 11.4966 17.8607 11.5 17.4445V11.5565C11.4966 11.1404 11.328 10.7427 11.0313 10.4509C10.7346 10.1591 10.3341 9.99708 9.918 10.0005Z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.918 4.0006H7.082C6.23326 3.97706 5.52559 4.64492 5.5 5.4936V6.5076C5.52559 7.35629 6.23326 8.02415 7.082 8.0006H9.918C10.7667 8.02415 11.4744 7.35629 11.5 6.5076V5.4936C11.4744 4.64492 10.7667 3.97706 9.918 4.0006Z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.082 13.0007H17.917C18.3333 13.0044 18.734 12.8425 19.0309 12.5507C19.3278 12.2588 19.4966 11.861 19.5 11.4447V5.55666C19.4966 5.14054 19.328 4.74282 19.0313 4.45101C18.7346 4.1592 18.3341 3.9972 17.918 4.00066H15.082C14.6659 3.9972 14.2654 4.1592 13.9687 4.45101C13.672 4.74282 13.5034 5.14054 13.5 5.55666V11.4447C13.5034 11.8608 13.672 12.2585 13.9687 12.5503C14.2654 12.8421 14.6659 13.0041 15.082 13.0007Z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.082 19.0006H17.917C18.7661 19.0247 19.4744 18.3567 19.5 17.5076V16.4936C19.4744 15.6449 18.7667 14.9771 17.918 15.0006H15.082C14.2333 14.9771 13.5256 15.6449 13.5 16.4936V17.5066C13.525 18.3557 14.2329 19.0241 15.082 19.0006Z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </g></svg
+                >
+                <span class="ml-3">Dashboard</span>
+              </a>
+            </li>
+            <!-- Más items del menú -->
+          </ul>
+>>>>>>> 41b4705aac179114df8e7b4411947a5dad364bec
         </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="sm:ml-48">
+        <!-- Navbar -->
+        <nav
+          class="left-0 right-0 z-40 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+        >
+          <div class="px-4 py-3 lg:px-6">
+            <div class="flex items-center justify-between">
+              <button
+                id="mobile-menu-button"
+                class="p-2 rounded-lg sm:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M4 6H20M4 12H20M4 18H20"
+                      stroke="#000000"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </g></svg
+                >
+              </button>
+
+              <div class="flex items-center gap-3 ml-auto">
+                <button
+                  type="button"
+                  id="theme-toggle"
+                  class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+                >
+                  <svg
+                    id="theme-toggle-dark-icon"
+                    class="hidden w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                    ></path>
+                  </svg>
+                  <svg
+                    id="theme-toggle-light-icon"
+                    class="hidden w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                    ></path>
+                  </svg>
+                </button>
+                <a
+                  href="/login"
+                  class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-400"
+                >
+                  Login
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Contenido de la página -->
+        <main class="p-4 flex flex-wrap">
+          <Header />
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:w-1/2 lg:w-2/5 w-full auto-rows-fr"
+          >
+            {
+              measurements.measurements.map((item) => (
+                <Panel>
+                  <div class="flex flex-col h-25 justify-between">
+                    {" "}
+                    {/* Added fixed height and padding */}
+                    <label class="text-sm font-medium text-gray-400 dark:text-gray-300">
+                      {item.label} ({item.unit}):
+                    </label>
+                    {item.values ? (
+                      <div class="flex flex-col flex-1">
+                        {" "}
+                        {/* Added flex-1 to fill space */}
+                        <div class="flex justify-between pt-3">
+                          <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                            {item.values.izq}
+                          </span>
+                          <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                            {item.values.der}
+                          </span>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+                          <span>
+                            <svg
+                              width="24px"
+                              height="24px"
+                              viewBox="0 0 24 24"
+                              id="left-arrow"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="text-gray-500 dark:text-gray-400"
+                            >
+                              <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <g id="SVGRepo_iconCarrier">
+                                <path
+                                  id="primary"
+                                  d="M21,12H3M6,9,3,12l3,3"
+                                  style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"
+                                />
+                              </g>
+                            </svg>
+                          </span>
+                          <span>
+                            <svg
+                              fill="#000000"
+                              width="24px"
+                              height="24px"
+                              viewBox="0 0 24 24"
+                              id="left-arrow"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="text-gray-500 dark:text-gray-400"
+                              transform="matrix(-1, 0, 0, 1, 0, 0)"
+                            >
+                              <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <g id="SVGRepo_iconCarrier">
+                                <path
+                                  id="primary"
+                                  d="M21,12H3M6,9,3,12l3,3"
+                                  style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"
+                                />
+                              </g>
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div class="flex items-center flex-1">
+                        {" "}
+                        {/* Added flex-1 to fill space */}
+                        <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                          {item.value}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </Panel>
+              ))
+            }
+          </div>
+
+          <div class="sm:w-1/2 lg:w-3/5 w-full">
+            <Panel>
+              <p>Contenido del segundo panel</p>
+            </Panel>
+          </div>
+        </main>
+      </div>
     </div>
 
     <script is:inline>
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            document.getElementById('theme-toggle-dark-icon').classList.remove('hidden');
-        }
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!localStorage.getItem("theme") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+        document
+          .getElementById("theme-toggle-light-icon")
+          .classList.remove("hidden");
+      } else {
+        document.documentElement.classList.remove("dark");
+        document
+          .getElementById("theme-toggle-dark-icon")
+          .classList.remove("hidden");
+      }
 
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            const darkIcon = document.getElementById('theme-toggle-dark-icon');
-            const lightIcon = document.getElementById('theme-toggle-light-icon');
+      document
+        .getElementById("theme-toggle")
+        .addEventListener("click", function () {
+          const darkIcon = document.getElementById("theme-toggle-dark-icon");
+          const lightIcon = document.getElementById("theme-toggle-light-icon");
 
-            // Toggle icons
-            darkIcon.classList.toggle('hidden');
-            lightIcon.classList.toggle('hidden');
+          // Toggle icons
+          darkIcon.classList.toggle("hidden");
+          lightIcon.classList.toggle("hidden");
 
-            // Toggle dark mode on html element
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
+          // Toggle dark mode on html element
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+          }
         });
+
+      document.querySelectorAll(".edit-button").forEach((button) => {
+        button.addEventListener("click", function () {
+          const input = this.parentElement.querySelector("input");
+          input.disabled = !input.disabled;
+          if (!input.disabled) {
+            input.focus();
+          }
+        });
+      });
+
+      document.querySelectorAll('input[type="number"]').forEach((input) => {
+        input.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const id = this.id;
+            const value = this.value;
+
+            // Disable the input after Enter
+            this.disabled = true;
+
+            // Here you'll add your POST function
+            console.log(`Update ${id}: ${value}`);
+            // Example POST structure:
+            /*
+                    fetch('/api/update-measurement', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            measurement: id,
+                            value: value
+                        })
+                    });
+                    */
+          }
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

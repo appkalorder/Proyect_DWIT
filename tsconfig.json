@@ -1,5 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
+<<<<<<< HEAD
   "include": [
     ".astro/types.d.ts",
     "**/*"
@@ -12,3 +13,20 @@
     "jsxImportSource": "react"
   }
 }
+=======
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@public/*": ["public/*"],
+      "@src/*": ["src/*"],
+      "@styles/*": ["src/styles/*"],
+      "@data/*": ["public/data/*"],
+    }
+  }
+}
+>>>>>>> 41b4705aac179114df8e7b4411947a5dad364bec
