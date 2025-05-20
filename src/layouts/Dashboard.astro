@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-
+import Header from '../components/Header.astro';
+import Panel from '../components/PanelBody.astro';
 ---
 
 <!DOCTYPE html>
@@ -35,7 +36,7 @@ import '../styles/global.css';
         </aside>
 
         <!-- Main Content -->
-        <div class="p-4 sm:ml-64 mt-16">
+        <div class="p-4 sm:ml-64">
             <!-- Navbar -->
             <nav class="fixed top-0 left-0 right-0 z-40 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 sm:left-64">
                 <div class="px-4 py-3 lg:px-6">
@@ -78,8 +79,16 @@ import '../styles/global.css';
             </nav>
 
             <!-- Contenido de la página -->
-            <main class="p-4 mt-4 sm:mt-8">
-                <slot />
+            <main class="p-4 mt-4 sm:mt-8 flex flex-wrap">
+                <Header />
+
+                <Panel>
+                    <p>Contenido del primer panel</p>
+                </Panel>
+                
+                <Panel>
+                    <p>Contenido del segundo panel</p>
+                </Panel>
             </main>
         </div>
     </div>
