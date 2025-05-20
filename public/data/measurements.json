@@ -1,0 +1,46 @@
+{
+  "measurements": [
+    {
+      "id": "altura",
+      "label": "Altura",
+      "value": 175,
+      "unit": "cm"
+    },
+    {
+      "id": "peso",
+      "label": "Peso",
+      "value": 70,
+      "unit": "kg"
+    },
+    {
+      "id": "brazo",
+      "label": "Brazo",
+      "values": {
+        "izq": 32,
+        "der": 33
+      },
+      "unit": "cm"
+    },
+    {
+      "id": "cadera",
+      "label": "Cadera",
+      "value": 95,
+      "unit": "cm"
+    },
+    {
+      "id": "pecho",
+      "label": "Pecho",
+      "value": 90,
+      "unit": "cm"
+    },
+    {
+      "id": "pierna",
+      "label": "Pierna",
+      "values": {
+        "izq": 55,
+        "der": 56
+      },
+      "unit": "cm"
+    }
+  ]
+}
