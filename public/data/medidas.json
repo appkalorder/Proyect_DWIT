@@ -1,0 +1,145 @@
+[
+  {
+    "fecha": "2025-01-10",
+    "altura": 175,
+    "peso": 70,
+    "brazo_izq": 30,
+    "brazo_der": 31,
+    "pierna_izq": 55,
+    "pierna_der": 56,
+    "cadera": 90,
+    "pecho": 95
+  },
+  {
+    "fecha": "2025-02-10",
+    "altura": 175,
+    "peso": 71,
+    "brazo_izq": 31,
+    "brazo_der": 32,
+    "pierna_izq": 56,
+    "pierna_der": 57,
+    "cadera": 91,
+    "pecho": 96
+  },
+  {
+    "fecha": "2025-03-10",
+    "altura": 175,
+    "peso": 72,
+    "brazo_izq": 32,
+    "brazo_der": 33,
+    "pierna_izq": 57,
+    "pierna_der": 58,
+    "cadera": 92,
+    "pecho": 97
+  },
+  {
+    "fecha": "2025-04-10",
+    "altura": 175,
+    "peso": 73,
+    "brazo_izq": 32.5,
+    "brazo_der": 33.5,
+    "pierna_izq": 58,
+    "pierna_der": 59,
+    "cadera": 93,
+    "pecho": 98
+  },
+  {
+    "fecha": "2025-05-10",
+    "altura": 175,
+    "peso": 74,
+    "brazo_izq": 33,
+    "brazo_der": 34,
+    "pierna_izq": 59,
+    "pierna_der": 60,
+    "cadera": 94,
+    "pecho": 99
+  },
+  {
+    "fecha": "2025-06-10",
+    "altura": 175,
+    "peso": 74.5,
+    "brazo_izq": 33.2,
+    "brazo_der": 34.2,
+    "pierna_izq": 59.5,
+    "pierna_der": 60.5,
+    "cadera": 94.5,
+    "pecho": 99.5
+  },
+  {
+    "fecha": "2025-07-10",
+    "altura": 175,
+    "peso": 75,
+    "brazo_izq": 33.5,
+    "brazo_der": 34.5,
+    "pierna_izq": 60,
+    "pierna_der": 61,
+    "cadera": 95,
+    "pecho": 100
+  },
+  {
+    "fecha": "2025-08-10",
+    "altura": 175,
+    "peso": 73.2,
+    "brazo_izq": 33.7,
+    "brazo_der": 34.8,
+    "pierna_izq": 60.5,
+    "pierna_der": 61.5,
+    "cadera": 95.5,
+    "pecho": 100.5
+  },
+  {
+    "fecha": "2025-09-10",
+    "altura": 175,
+    "peso": 76,
+    "brazo_izq": 34,
+    "brazo_der": 35,
+    "pierna_izq": 61,
+    "pierna_der": 62,
+    "cadera": 96,
+    "pecho": 101
+  },
+  {
+    "fecha": "2025-10-10",
+    "altura": 175,
+    "peso": 76.5,
+    "brazo_izq": 34.2,
+    "brazo_der": 35.2,
+    "pierna_izq": 61.5,
+    "pierna_der": 62.5,
+    "cadera": 96.5,
+    "pecho": 101.5
+  },
+  {
+    "fecha": "2025-11-10",
+    "altura": 175,
+    "peso": 76,
+    "brazo_izq": 34.5,
+    "brazo_der": 35.5,
+    "pierna_izq": 62,
+    "pierna_der": 63,
+    "cadera": 97,
+    "pecho": 102
+  },
+  {
+    "fecha": "2025-12-10",
+    "altura": 175,
+    "peso": 77.5,
+    "brazo_izq": 34.8,
+    "brazo_der": 35.8,
+    "pierna_izq": 62.5,
+    "pierna_der": 63.5,
+    "cadera": 97.5,
+    "pecho": 102.5
+  },
+  {
+    "fecha": "2026-01-10",
+    "altura": 175,
+    "peso": 78,
+    "brazo_izq": 35,
+    "brazo_der": 36,
+    "pierna_izq": 63,
+    "pierna_der": 64,
+    "cadera": 98,
+    "pecho": 103
+  }
+]
