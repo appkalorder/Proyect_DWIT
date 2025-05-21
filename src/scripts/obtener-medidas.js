@@ -1,9 +1,12 @@
 export async function getLatestMeasurements() {
   try {
-    const res = await fetch('http://localhost:8080/obtener_medidas.php');
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // const res = await fetch(`http://localhost:8080/obtener_medidas.php?user_id=${user.id}`);
+    const res = await fetch(`http://localhost:8080/obtener_medidas.php`);
     const data = await res.json();
 
-    // Ordenar por fecha descendente y tomar el más reciente
+    if (!data.length) return { measurements: [] };
+
     const latest = data.sort((a, b) => new Date(b.fecha) - new Date(a.fecha))[0];
 
     return {
@@ -45,6 +48,10 @@ export async function getLatestMeasurements() {
           unit: 'cm',
         },
       ],
+      allMeasurements: data.map(item => ({
+        ...item,
+        fecha: new Date(item.fecha).toISOString() // Asegurar formato consistente
+      }))
     };
   } catch (error) {
     console.error('Error obteniendo medidas:', error);

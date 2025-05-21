@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -12,161 +12,120 @@ import {
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Legend, Tooltip);
 
-export default function LineChart() {
+const medidasKeys = {
+  altura: { label: 'Altura (cm)', color: '#8884d8' },
+  peso: { label: 'Peso (kg)', color: '#82ca9d' },
+  brazo_izq: { label: 'Brazo Izq (cm)', color: '#ff6384' },
+  brazo_der: { label: 'Brazo Der (cm)', color: '#36a2eb' },
+  pierna_izq: { label: 'Pierna Izq (cm)', color: '#ffce56' },
+  pierna_der: { label: 'Pierna Der (cm)', color: '#4bc0c0' },
+  cadera: { label: 'Cadera (cm)', color: '#9966ff' },
+  pecho: { label: 'Pecho (cm)', color: '#c9cbcf' },
+};
+
+function LineChart() {
   const [datos, setDatos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [medidaSeleccionada, setMedidaSeleccionada] = useState('peso');
-  const [timeframe, setTimeframe] = useState('1-mes');
+  const [rangoTiempo, setRangoTiempo] = useState('toda-la-vida');
 
-  const medidasKeys = {
-    altura: { label: 'Altura', color: '#8884d8' },
-    peso: { label: 'Peso', color: '#82ca9d' },
-    brazo_izq: { label: 'Brazo Izquierdo', color: '#ff6384' },
-    brazo_der: { label: 'Brazo Derecho', color: '#36a2eb' },
-    pierna_izq: { label: 'Pierna Izquierda', color: '#ffce56' },
-    pierna_der: { label: 'Pierna Derecha', color: '#4bc0c0' },
-    cadera: { label: 'Cadera', color: '#9966ff' },
-    pecho: { label: 'Pecho', color: '#c9cbcf' }
-  };
-
+  // Escuchar cambios desde el HTML externo
   useEffect(() => {
-    // Fetch initial data
-    fetch('/data/medidas.json')
-      .then((res) => res.json())
-      .then((data) => setDatos(data));
-
-    // Listen for measurement changes
-    const handleMeasurementChange = (event) => {
-      setMedidaSeleccionada(event.detail.measurement);
-    };
-
-    // Listen for timeframe changes
-    const handleTimeframeChange = (event) => {
-      setTimeframe(event.detail.timeframe);
-    };
+    const handleMeasurementChange = (e) => setMedidaSeleccionada(e.detail.measurement);
+    const handleTimeframeChange = (e) => setRangoTiempo(e.detail.timeframe);
 
     window.addEventListener('measurementChange', handleMeasurementChange);
     window.addEventListener('timeframeChange', handleTimeframeChange);
 
-    // Cleanup listeners
     return () => {
       window.removeEventListener('measurementChange', handleMeasurementChange);
       window.removeEventListener('timeframeChange', handleTimeframeChange);
     };
   }, []);
 
-  // Filter data based on selected timeframe
-  const filteredData = useMemo(() => {
-    if (!datos.length) return [];
-    
-    const now = new Date();
-    const timeframeMap = {
-      '1-mes': 30,
-      '3-meses': 90,
-      '6-meses': 180,
-      '1-año': 365,
-      'toda-la-vida': Infinity
-    };
+  // Cargar datos
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://localhost:8080/obtener_medidas.php?user_id=1')
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        const parsed = data.map(item => ({
+          ...item,
+          fecha: new Date(item.fecha),
+        }));
 
-    const days = timeframeMap[timeframe] || 30;
-    
-    if (days === Infinity) return datos;
+        setDatos(parsed);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Error al cargar los datos.');
+        setLoading(false);
+      });
+  }, []);
 
-    const cutoffDate = new Date(now.setDate(now.getDate() - days));
-    return datos.filter(d => new Date(d.fecha) >= cutoffDate);
-  }, [datos, timeframe]);
+  if (loading) return <p>Cargando datos...</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-  if (filteredData.length === 0) return <p>Cargando datos...</p>;
+  // Filtrar por duración
+  const ahora = new Date();
+  const datosFiltrados = datos.filter(d => {
+    const diff = (ahora - d.fecha) / (1000 * 60 * 60 * 24); // días
 
-  const medida = medidasKeys[medidaSeleccionada];
-  const fechas = filteredData.map((d) => d.fecha);
+    switch (rangoTiempo) {
+      case '1-mes': return diff <= 30;
+      case '3-meses': return diff <= 90;
+      case '6-meses': return diff <= 180;
+      case '1-año': return diff <= 365;
+      default: return true; // toda-la-vida
+    }
+  });
 
-  const dataset = {
-    label: medida.label,
-    data: filteredData.map((d) => d[medidaSeleccionada]),
-    borderColor: medida.color,
-    backgroundColor: medida.color + '20',
-    borderWidth: 2,
-    tension: 0.2,
-    fill: true,
-    pointBackgroundColor: medida.color,
-    pointRadius: 4
-  };
+  const medida = medidasKeys[medidaSeleccionada] || medidasKeys['peso'];
 
   const data = {
-    labels: fechas,
-    datasets: [dataset]
+    labels: datosFiltrados.map(d => d.fecha.toLocaleDateString()),
+    datasets: [{
+      label: medida.label,
+      data: datosFiltrados.map(d => parseFloat(d[medidaSeleccionada])),
+      borderColor: medida.color,
+      tension: 0.2,
+      fill: false,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+    }]
   };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
     plugins: {
-      legend: {
-        position: 'top',
-        labels: {
-          font: {
-            size: 14
-          }
-        }
-      },
+      legend: { position: 'top' },
       tooltip: {
-        mode: 'index',
-        intersect: false,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        titleColor: '#666',
-        bodyColor: '#666',
-        borderColor: '#ccc',
-        borderWidth: 1
+        callbacks: {
+          label: context => `${medida.label}: ${context.parsed.y}`
+        }
       }
     },
     scales: {
       x: {
-        title: {
-          display: true,
-          text: 'Fecha',
-          font: {
-            size: 14,
-            weight: 'bold'
-          }
-        },
-        grid: {
-          display: false
-        }
+        title: { display: true, text: 'Fecha' }
       },
       y: {
-        title: {
-          display: true,
-          text: medida.label,
-          font: {
-            size: 14,
-            weight: 'bold'
-          }
-        },
-        beginAtZero: false,
-        grid: {
-          color: 'rgba(0, 0, 0, 0.1)'
-        }
+        title: { display: true, text: medida.label },
+        beginAtZero: false
       }
-    },
-    interaction: {
-      mode: 'nearest',
-      axis: 'x',
-      intersect: false
-    },
-    animation: {
-      duration: 750,
-      easing: 'easeInOutQuart'
     }
   };
 
   return (
-    <div className="w-full h-[400px] p-4">
-      <h2 className="text-xl font-bold mb-4 text-gray-700 dark:text-gray-200">
-        Progreso de {medida.label}
-      </h2>
-      <div className="w-full h-full">
-        <Line data={data} options={options} />
-      </div>
+    <div>
+      <h2 className="text-xl font-semibold mb-4">Progreso de {medida.label}</h2>
+      <Line data={data} options={options} />
     </div>
   );
 }
+
+export default LineChart;
