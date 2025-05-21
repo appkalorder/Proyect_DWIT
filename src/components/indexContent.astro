@@ -1,0 +1,146 @@
+---
+import Header from "./Header.astro"
+import Panel from "./PanelBody.astro"
+import LineChart from "./LineChart"
+import user from "@data/user.json";
+import measurements from "@data/measurements.json";
+
+const startDate = new Date(user.time_taining);
+const now = new Date();
+
+let yearsTraining = now.getFullYear() - startDate.getFullYear();
+
+// Corregir si el mes y día actuales aún no han alcanzado el de inicio
+const monthDiff = now.getMonth() - startDate.getMonth();
+const dayDiff = now.getDate() - startDate.getDate();
+if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+  yearsTraining -= 1;
+}
+
+// Get measurements with better error handling
+const heightMeasurement = measurements.measurements.find(item => item.label === "Altura");
+const weightMeasurement = measurements.measurements.find(item => item.label === "Peso");
+
+// Safe type checking and conversion
+const height: number = heightMeasurement?.value ? heightMeasurement.value / 100 : 0;
+const weight: number = weightMeasurement?.value ?? 0;
+
+// Calculate IMC with validation
+const IMC = (height > 0 && weight > 0) 
+  ? (weight / (height * height)).toFixed(2) 
+  : "N/A";
+---
+
+<!-- Contenido de la página -->
+<main class="p-4 flex flex-wrap">
+  <Header />
+  <div
+    class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:w-1/2 lg:w-2/5 w-full"
+  >
+    <div class="col-span-full">
+      <Panel>
+        <div class="flex items-center justify-between">
+          <h2>Edad: <span class="text-cyan-500">{user.age} años</span></h2>
+          <h2>
+            Tiempo entrenando: <span class="text-cyan-500"
+              >{yearsTraining} años</span>
+          </h2>
+          <h2>IMC: <span class="text-cyan-500">{IMC}</span></h2>
+        </div>
+      </Panel>
+    </div>
+    {
+      measurements.measurements.map((item) => (
+        <Panel>
+          <div class="flex flex-col h-25 justify-between">
+            {" "}
+            {/* Added fixed height and padding */}
+            <label class="text-sm font-medium text-gray-400 dark:text-gray-300">
+              {item.label} ({item.unit}):
+            </label>
+            {item.values ? (
+              <div class="flex flex-col flex-1">
+                {" "}
+                {/* Added flex-1 to fill space */}
+                <div class="flex justify-between pt-3">
+                  <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                    {item.values.izq}
+                  </span>
+                  <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                    {item.values.der}
+                  </span>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  <span>
+                    <svg
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      id="left-arrow"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="text-gray-500 dark:text-gray-400"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          id="primary"
+                          d="M21,12H3M6,9,3,12l3,3"
+                          style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"
+                        />
+                      </g>
+                    </svg>
+                  </span>
+                  <span>
+                    <svg
+                      fill="#000000"
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      id="left-arrow"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="text-gray-500 dark:text-gray-400"
+                      transform="matrix(-1, 0, 0, 1, 0, 0)"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          id="primary"
+                          d="M21,12H3M6,9,3,12l3,3"
+                          style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"
+                        />
+                      </g>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div class="flex items-center flex-1">
+                {" "}
+                {/* Added flex-1 to fill space */}
+                <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                  {item.value}
+                </span>
+              </div>
+            )}
+          </div>
+        </Panel>
+      ))
+    }
+  </div>
+
+  <div class="sm:w-1/2 lg:w-3/5 w-full">
+    <Panel>
+      <LineChart client:load />
+    </Panel>
+  </div>
+</main>
