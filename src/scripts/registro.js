@@ -10,7 +10,7 @@ form.addEventListener("submit", async (e) => {
         contraseña: form.contraseña.value,
     };
 
-    const res = await fetch(`${HOST}api_dwit/registrar_usuario.php`, {
+    const res = await fetch(`http://localhost:8080/registrar_usuario.php`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -19,5 +19,5 @@ form.addEventListener("submit", async (e) => {
     });
 
     const result = await res.json();
-    
+    console.log(result)
 });
