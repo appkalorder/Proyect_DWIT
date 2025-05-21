@@ -18,8 +18,8 @@ if (now.getMonth() < startDate.getMonth() ||
 const measurements = await getLatestMeasurements();
 
 // IMC
-const heightM = parseFloat(measurements.measurements.find(m => m.label === "Altura")?.value ?? 0);
-const weight = parseFloat(measurements.measurements.find(m => m.label === "Peso")?.value ?? 0);
+const heightM = parseFloat(String(measurements.measurements.find(m => m.label === "Altura")?.value ?? "0"));
+const weight = parseFloat(String(measurements.measurements.find(m => m.label === "Peso")?.value ?? "0"));
 const IMC = (heightM > 0 && weight > 0) 
   ? (weight / (heightM * heightM)).toFixed(2)
   : "N/A";
