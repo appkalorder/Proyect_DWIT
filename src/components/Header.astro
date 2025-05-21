@@ -24,16 +24,19 @@
       <div class="self-center mx-auto md:w-1/4 w-full">
         <div class="relative">
           <select
-          id="bodyPart"
-          name="bodyPart"
-          class="appearance-none w-full group-hover:text-gray-700 dark:group-hover:text-gray-300 bg-white border border-gray-300 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-white py-2 px-4 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="bodyPart"
+            name="bodyPart"
+            class="appearance-none w-full group-hover:text-gray-700 dark:group-hover:text-gray-300 bg-white border border-gray-300 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-white py-2 px-4 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-          <option value="" disabled selected hidden>Parte del cuerpo</option>
-          <option value="imc">Indice de masa corporal</option>
-          <option value="brazo">Brazo</option>
-          <option value="pierna">Pierna</option>
-          <option value="pecho">Pecho</option>
-          <option value="cintura">Cintura</option>
+            <option value="" disabled selected hidden>Parte del cuerpo</option>
+            <option value="altura">Altura</option>
+            <option value="peso">Peso</option>
+            <option value="brazo_izq">Brazo Izquierdo</option>
+            <option value="brazo_der">Brazo Derecho</option>
+            <option value="pierna_izq">Pierna Izquierda</option>
+            <option value="pierna_der">Pierna Derecha</option>
+            <option value="cadera">Cadera</option>
+            <option value="pecho">Pecho</option>
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-400">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -44,3 +47,20 @@
       </div>
   </div>
 </nav>
+
+
+<script>
+  document.getElementById('bodyPart')?.addEventListener('change', (e) => {
+    const selectedValue = (e.target as HTMLSelectElement).value;
+    window.dispatchEvent(new CustomEvent('measurementChange', {
+      detail: { measurement: selectedValue }
+    }));
+  });
+
+  document.getElementById('duracion')?.addEventListener('change', (e) => {
+    const selectedValue = (e.target as HTMLSelectElement).value;
+    window.dispatchEvent(new CustomEvent('timeframeChange', {
+      detail: { timeframe: selectedValue }
+    }));
+  });
+</script>
