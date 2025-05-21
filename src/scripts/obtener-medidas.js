@@ -10,38 +10,38 @@ export async function getLatestMeasurements() {
       measurements: [
         {
           label: 'Altura',
-          value: latest.altura,
+          value: Math.trunc(latest.altura),
           unit: 'm',
         },
         {
           label: 'Peso',
-          value: latest.peso,
+          value: Math.trunc(latest.peso),
           unit: 'kg',
         },
         {
           label: 'Brazo',
           values: {
-            izq: latest.brazo_izq,
-            der: latest.brazo_der,
+            izq: Math.trunc(latest.brazo_izq),
+            der: Math.trunc(latest.brazo_der),
           },
           unit: 'cm',
         },
         {
           label: 'Pierna',
           values: {
-            izq: latest.pierna_izq,
-            der: latest.pierna_der,
+            izq: Math.trunc(latest.pierna_izq),
+            der: Math.trunc(latest.pierna_der),
           },
           unit: 'cm',
         },
         {
           label: 'Cadera',
-          value: latest.cadera,
+          value: Math.trunc(latest.cadera),
           unit: 'cm',
         },
         {
           label: 'Pecho',
-          value: latest.pecho,
+          value: Math.trunc(latest.pecho),
           unit: 'cm',
         },
       ],
