@@ -67,21 +67,29 @@ import Panel from "@components/PanelBody.astro";
         />
       </div>
 
-      <div class="flex justify-end space-x-3">
+      <div class="flex justify-between space-x-3">
         <button
           type="button"
-          onclick="window.history.back()"
-          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md"
+          id="deleteUserBtn"
+          class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md"
         >
-          Cancelar
+          Eliminar Cuenta
         </button>
-        <button
-          type="submit"
-          id="submitBtn"
-          class="px-4 py-2 text-sm font-medium dark:bg-gray-100 bg-gray-900 text-gray-100 dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-400 rounded-md"
-        >
-          Guardar Cambios
-        </button>
+        <div class="flex space-x-3">
+          <button
+            type="button"
+            onclick="window.history.back()"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 text-sm font-medium dark:bg-gray-100 bg-gray-900 text-gray-100 dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-400 rounded-md"
+          >
+            Guardar Cambios
+          </button>
+        </div>
       </div>
     </form>
   </Panel>
@@ -90,6 +98,7 @@ import Panel from "@components/PanelBody.astro";
 <script>
   const form = document.getElementById('profileForm');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const deleteBtn = document.getElementById('deleteUserBtn');
 
   // Pre-fill form with user data
   if (user.id) {
@@ -132,6 +141,42 @@ import Panel from "@components/PanelBody.astro";
       }
     } catch (error) {
       console.error('Error:', error);
+    }
+  });
+  
+  deleteBtn?.addEventListener('click', async () => {
+    if (!user?.id) return;
+
+    if (confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) {
+      try {
+        // Add debug log
+        console.log('Attempting to delete user:', user.id);
+
+        const response = await fetch(`http://localhost:8080/eliminar_usuario.php`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ id: user.id })
+        });
+
+        // Add debug log
+        console.log('Delete response status:', response.status);
+        
+        const data = await response.json();
+        console.log('Delete response data:', data);
+
+        if (response.ok) {
+          localStorage.removeItem('user');
+          alert('Usuario eliminado correctamente');
+          window.location.href = '/login';
+        } else {
+          throw new Error(data.error || 'Error al eliminar usuario');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   });
 </script>
