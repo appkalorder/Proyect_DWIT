@@ -10,24 +10,6 @@ import Button from "@components/SubmitMeasurements.astro"
 import Modal from "@components/ModalFormNewMeasure.astro"
 import UserMenu from '@components/UserMenu.astro';
 
-// Datos calculados
-const startDate = new Date(user.time_taining);
-const now = new Date();
-let yearsTraining = now.getFullYear() - startDate.getFullYear();
-if (now.getMonth() < startDate.getMonth() || 
-   (now.getMonth() === startDate.getMonth() && now.getDate() < startDate.getDate())) {
-  yearsTraining -= 1;
-}
-
-// Obtener medidas
-const measurements = await getLatestMeasurements();
-
-// IMC
-const heightM = parseFloat(measurements.measurements.find(m => m.label === "Altura")?.value ?? 0);
-const weight = parseFloat(measurements.measurements.find(m => m.label === "Peso")?.value ?? 0);
-const IMC = (heightM > 0 && weight > 0) 
-  ? (weight / (heightM * heightM)).toFixed(2)
-  : "N/A";
 interface Props {
   currentPage?: string;
 }
