@@ -2,27 +2,10 @@
 import Header from "./Header.astro"
 import Panel from "./PanelBody.astro"
 import LineChart from "./LineChart"
-import user from "@data/user.json";
 import { getLatestMeasurements } from '@scripts/obtener-medidas.js';
-
-// Datos calculados
-const startDate = new Date(user.time_taining);
-const now = new Date();
-let yearsTraining = now.getFullYear() - startDate.getFullYear();
-if (now.getMonth() < startDate.getMonth() || 
-   (now.getMonth() === startDate.getMonth() && now.getDate() < startDate.getDate())) {
-  yearsTraining -= 1;
-}
 
 // Obtener medidas
 const measurements = await getLatestMeasurements();
-
-// IMC
-const heightM = parseFloat(String(measurements.measurements.find(m => m.label === "Altura")?.value ?? "0"));
-const weight = parseFloat(String(measurements.measurements.find(m => m.label === "Peso")?.value ?? "0"));
-const IMC = (heightM > 0 && weight > 0) 
-  ? (weight / (heightM * heightM)).toFixed(2)
-  : "N/A";
 ---
 
 <!-- Contenido de la página -->
@@ -33,13 +16,12 @@ const IMC = (heightM > 0 && weight > 0)
   >
     <div class="col-span-full">
       <Panel>
-        <div class="flex items-center justify-between">
-          <h2>Edad: <span class="text-cyan-500">{user.age} años</span></h2>
+        <div class="flex items-center justify-between" id="userStats">
+          <h2>Edad: <span class="text-cyan-500" id="userAge">--</span></h2>
           <h2>
-            Tiempo entrenando: <span class="text-cyan-500"
-              >{yearsTraining} años</span>
+            Tiempo entrenando: <span class="text-cyan-500" id="trainingTime">--</span>
           </h2>
-          <h2>IMC: <span class="text-cyan-500">{IMC}</span></h2>
+          <h2>IMC: <span class="text-cyan-500" id="imc">--</span></h2>
         </div>
       </Panel>
     </div>
@@ -138,3 +120,83 @@ const IMC = (heightM > 0 && weight > 0)
     </Panel>
   </div>
 </main>
+
+
+<script>
+  interface User {
+    id: number;
+    nombre: string;
+    fecha_nacimiento: string;
+    años_entrenando: number;  // Changed to number since it stores direct years
+  }
+
+  const user: User | null = JSON.parse(localStorage.getItem('user') || 'null');
+  
+  const calculateAge = (birthDate: string): number => {
+    const birth = new Date(birthDate);
+    const now = new Date();
+    let age = now.getFullYear() - birth.getFullYear();
+    const monthDiff = now.getMonth() - birth.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+  const calculateTrainingTime = (years: number): string => {
+    return years.toString();  // Simply convert the number to string since it's already in years
+  };
+
+  const calculateIMC = (height: number, weight: number): string => {
+    if (height <= 0 || weight <= 0 || isNaN(height) || isNaN(weight)) return 'N/A';
+    const heightInMeters = height / 100;
+    const imc = weight / (heightInMeters * heightInMeters);
+    return imc.toFixed(2);
+  };
+
+  if (user) {
+    const userAgeElement = document.getElementById('userAge');
+    const trainingTimeElement = document.getElementById('trainingTime');
+    const imcElement = document.getElementById('imc');
+
+    // Update age
+    if (userAgeElement && user.fecha_nacimiento) {
+      const age = calculateAge(user.fecha_nacimiento);
+      userAgeElement.textContent = `${age} años`;
+    }
+
+    // Update training time - simplified since años_entrenando is already a number
+    if (trainingTimeElement && user.años_entrenando) {
+      trainingTimeElement.textContent = `${user.años_entrenando} años`;
+    }
+
+    // Update IMC
+    if (imcElement) {
+      const measurements = document.querySelectorAll('.flex-col.h-25');
+      let height = 0;
+      let weight = 0;
+
+      measurements.forEach(item => {
+        const labelElement = item.querySelector('label');
+        const valueElement = item.querySelector('span.lg\\:text-4xl');
+        
+        if (labelElement && valueElement) {
+          const label = labelElement.textContent || '';
+          const value = valueElement.textContent || '0';
+          
+          if (label.includes('Altura')) {
+            height = parseFloat(value);
+          }
+          if (label.includes('Peso')) {
+            weight = parseFloat(value);
+          }
+        }
+      });
+
+      console.log('Found measurements - Height:', height, 'Weight:', weight);
+      const imc = calculateIMC(height, weight);
+      imcElement.textContent = imc;
+    }
+  }
+</script>
