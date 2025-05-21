@@ -4,9 +4,9 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const user = JSON.parse(localStorage.getItem("user"));
-
+    console.log("ID: ", user.id);
     const data = {
-        user_id: user.id, // ← Aquí se añade el ID real
+        user_id: user.id, 
         altura: form.altura.value,
         peso: form.peso.value,
         brazo_izq: form.brazo_izq.value,

@@ -2,7 +2,7 @@ export async function getLatestMeasurements() {
   try {
     // const user = JSON.parse(localStorage.getItem("user"));
     // const res = await fetch(`http://localhost:8080/obtener_medidas.php?user_id=${user.id}`);
-    const res = await fetch(`http://localhost:8080/obtener_medidas.php`);
+    const res = await fetch(`http://localhost:8080/obtener_medidas.php?user_id=1`);
     const data = await res.json();
 
     if (!data.length) return { measurements: [] };
