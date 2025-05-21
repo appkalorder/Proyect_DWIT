@@ -41,12 +41,12 @@ import Panel from "@components/PanelBody.astro";
         <label
           class="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          Edad
+          Fecha de Nacimiento
         </label>
         <input
-          type="number"
-          name="edad"
-          id="edad"
+          type="date"
+          name="fecha_nacimiento"
+          id="fecha_nacimiento"
           min="0"
           max="120"
           class="mt-1 py-1 px-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -57,10 +57,10 @@ import Panel from "@components/PanelBody.astro";
         <label
           class="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          Fecha de Inicio de Entrenamiento
+          Años Entrenando
         </label>
         <input
-          type="date"
+          type="number"
           name="tiempo_entrenando"
           id="tiempo_entrenando"
           class="mt-1 py-1 px-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -86,54 +86,4 @@ import Panel from "@components/PanelBody.astro";
   </Panel>
 </div>
 
-<script>
-  const form = document.getElementById("profileForm") as HTMLFormElement;
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-  // Fill form with existing user data
-  if (user) {
-    Object.keys(user).forEach((key) => {
-      const input = document.getElementById(key) as HTMLInputElement;
-      if (input) {
-        input.value = user[key];
-      }
-    });
-  }
-
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const updatedUser = {
-      ...user,
-      nombre: formData.get("nombre"),
-      correo: formData.get("correo"),
-      edad: formData.get("edad"),
-      tiempo_entrenando: formData.get("tiempo_entrenando"),
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:8080/actualizar_usuario.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        },
-      );
-
-      if (response.ok) {
-        // Update localStorage with new data
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        window.location.href = "/";
-      } else {
-        throw new Error("Error al actualizar el perfil");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error al actualizar el perfil");
-    }
-  });
-</script>
+<script type="module" src="/src/scripts/users/update.js"></script>

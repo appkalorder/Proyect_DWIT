@@ -73,10 +73,10 @@ import Layout from '@layouts/Layout.astro';
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Edad</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Fecha de Nacimiento</label>
                         <input 
-                            type="text"
-                            name="edad"
+                            type="date"
+                            name="fecha_nacimiento"
                             class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                             required
                         />
@@ -85,7 +85,7 @@ import Layout from '@layouts/Layout.astro';
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Tiempo Entrenando</label>
                         <input 
                             type="text"
-                            name="tiempo_entrenando"
+                            name="años_entrenando"
                             class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                             required
                         />
@@ -108,6 +108,7 @@ import Layout from '@layouts/Layout.astro';
     </div>
 </Layout>
 
+<script type="module" src="/src/scripts/users/registro.js"></script>
 <script is:inline>
     // Check initial theme
     if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
