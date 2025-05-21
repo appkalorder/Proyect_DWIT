@@ -7,6 +7,8 @@ import Header from "@components/Header.astro";
 import Panel from "@components/PanelBody.astro";
 import measurements from "@data/measurements.json";
 import user from "@data/user.json";
+import Button from "@components/SubmitMeasurements.astro"
+import Modal from "@components/ModalFormNewMeasure.astro"
 
 const startDate = new Date(user.time_taining);
 const now = new Date();
@@ -114,6 +116,7 @@ const IMC = (height > 0 && weight > 0)
             </li>
             <!-- Más items del menú -->
           </ul>
+          <Button></Button>
         </div>
       </aside>
 
@@ -301,6 +304,7 @@ const IMC = (height > 0 && weight > 0)
         </main>
       </div>
     </div>
+    <Modal />
 
     <script is:inline>
       if (

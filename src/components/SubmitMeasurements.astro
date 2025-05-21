@@ -1,0 +1,59 @@
+<button 
+  type="button" 
+  id="openModalBtn"
+  class="mt-auto flex items-center gap-2 text-sm dark:bg-gray-100 bg-gray-900 text-gray-100 dark:text-gray-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-700"
+>
+  <span class="flex items-center gap-2">
+    Agregar Medidas
+    <svg 
+      width="24px" 
+      height="24px" 
+      viewBox="0 -0.5 25 25" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      class="stroke-current" 
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+      <g id="SVGRepo_iconCarrier">
+        <g id="Complete">
+          <g data-name="add" id="add-2">
+            <g>
+              <line 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                x1="12" 
+                x2="12" 
+                y1="19" 
+                y2="5"
+              ></line>
+              <line 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                x1="5" 
+                x2="19" 
+                y1="12" 
+                y2="12"
+              ></line>
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </span>
+</button>
+
+<script>
+    const openModalBtn = document.getElementById('openModalBtn');
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('openMeasurementModal'));
+        });
+    }
+</script>

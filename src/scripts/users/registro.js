@@ -1,4 +1,6 @@
 const form = document.querySelector("form");
+const HOST = import.meta.env.HOST;
+
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
