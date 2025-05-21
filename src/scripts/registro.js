@@ -1,4 +1,6 @@
 const form = document.querySelector("form");
+const HOST = import.meta.env.HOST;
+
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -8,7 +10,7 @@ form.addEventListener("submit", async (e) => {
         contraseña: form.contraseña.value,
     };
 
-    const res = await fetch(`http://10.41.1.236/api_dwit/registrar_usuario.php`, {
+    const res = await fetch(`${HOST}api_dwit/registrar_usuario.php`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
