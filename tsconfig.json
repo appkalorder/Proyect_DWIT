@@ -19,6 +19,7 @@
       "@src/*": ["src/*"],
       "@styles/*": ["src/styles/*"],
       "@data/*": ["public/data/*"],
+      "@scripts/*": ["src/scripts/*"],
     }
   }
 }

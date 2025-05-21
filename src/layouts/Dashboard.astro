@@ -1,41 +1,33 @@
 ---
 import '@styles/global.css';
-
 import LineChart from '@components/LineChart.jsx';
 import "@styles/global.css";
 import Header from "@components/Header.astro";
 import Panel from "@components/PanelBody.astro";
-import measurements from "@data/measurements.json";
 import user from "@data/user.json";
+import { getLatestMeasurements } from '@scripts/obtener-medidas.js';
 import Button from "@components/SubmitMeasurements.astro"
 import Modal from "@components/ModalFormNewMeasure.astro"
 
+// Datos calculados
 const startDate = new Date(user.time_taining);
 const now = new Date();
-
 let yearsTraining = now.getFullYear() - startDate.getFullYear();
-
-// Corregir si el mes y día actuales aún no han alcanzado el de inicio
-const monthDiff = now.getMonth() - startDate.getMonth();
-const dayDiff = now.getDate() - startDate.getDate();
-if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+if (now.getMonth() < startDate.getMonth() || 
+   (now.getMonth() === startDate.getMonth() && now.getDate() < startDate.getDate())) {
   yearsTraining -= 1;
 }
 
-// Get measurements with better error handling
-const heightMeasurement = measurements.measurements.find(item => item.label === "Altura");
-const weightMeasurement = measurements.measurements.find(item => item.label === "Peso");
+// Obtener medidas
+const measurements = await getLatestMeasurements();
 
-// Safe type checking and conversion
-const height: number = heightMeasurement?.value ? heightMeasurement.value / 100 : 0;
-const weight: number = weightMeasurement?.value ?? 0;
-
-// Calculate IMC with validation
-const IMC = (height > 0 && weight > 0) 
-  ? (weight / (height * height)).toFixed(2) 
+// IMC
+const heightM = parseFloat(measurements.measurements.find(m => m.label === "Altura")?.value ?? 0);
+const weight = parseFloat(measurements.measurements.find(m => m.label === "Peso")?.value ?? 0);
+const IMC = (heightM > 0 && weight > 0) 
+  ? (weight / (heightM * heightM)).toFixed(2)
   : "N/A";
 ---
-
 <!doctype html>
 <html lang="es">
   <head>
