@@ -1,0 +1,78 @@
+---
+---
+
+<div class="relative" id="userMenuContainer">
+  
+</div>
+
+<script>
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isLoggedIn = !!user.nombre;
+  const container = document.getElementById('userMenuContainer');
+
+  if (container) {
+    container.innerHTML = isLoggedIn 
+      ? `
+        <button
+          id="userMenuButton"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
+        >
+          <span>${user.nombre}</span>
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div
+          id="userMenuFlyout"
+          class="hidden absolute right-0 mt-2 w-48 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-[9999]"
+        >
+          <a
+            href="/profile"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Editar Perfil
+          </a>
+          <button
+            id="logoutButton"
+            class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Cerrar Sesión
+          </button>
+        </div>
+      `
+      : `
+        <a
+          href="/login"
+          class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          Iniciar Sesión
+        </a>
+      `;
+
+    // Add event listeners after content is inserted
+    const userMenuButton = document.getElementById('userMenuButton');
+    const userMenuFlyout = document.getElementById('userMenuFlyout');
+    const logoutButton = document.getElementById('logoutButton');
+
+    if (userMenuButton && userMenuFlyout) {
+      userMenuButton.addEventListener('click', () => {
+        userMenuFlyout.classList.toggle('hidden');
+      });
+
+      // Fixed type error in click handler
+      document.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as Node;
+        if (target && !userMenuButton.contains(target) && !userMenuFlyout.contains(target)) {
+          userMenuFlyout.classList.add('hidden');
+        }
+      });
+    }
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      });
+    }
+  }
+</script>

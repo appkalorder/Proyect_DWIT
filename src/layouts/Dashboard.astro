@@ -8,6 +8,7 @@ import user from "@data/user.json";
 import { getLatestMeasurements } from '@scripts/obtener-medidas.js';
 import Button from "@components/SubmitMeasurements.astro"
 import Modal from "@components/ModalFormNewMeasure.astro"
+import UserMenu from '@components/UserMenu.astro';
 
 // Datos calculados
 const startDate = new Date(user.time_taining);
@@ -27,6 +28,11 @@ const weight = parseFloat(measurements.measurements.find(m => m.label === "Peso"
 const IMC = (heightM > 0 && weight > 0) 
   ? (weight / (heightM * heightM)).toFixed(2)
   : "N/A";
+interface Props {
+  currentPage?: string;
+}
+
+const { currentPage = 'other' } = Astro.props;
 ---
 <!doctype html>
 <html lang="es">
@@ -34,6 +40,7 @@ const IMC = (heightM > 0 && weight > 0)
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FitTracker</title>
+    <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg">
   </head>
   <body class=" duration-200">
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -108,7 +115,7 @@ const IMC = (heightM > 0 && weight > 0)
             </li>
             <!-- Más items del menú -->
           </ul>
-          <Button></Button>
+          {currentPage === 'index' && <Button />}
         </div>
       </aside>
 
@@ -173,127 +180,13 @@ const IMC = (heightM > 0 && weight > 0)
                     ></path>
                   </svg>
                 </button>
-                <a
-                  href="/login"
-                  class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-400"
-                >
-                  {(user.name) ? user.name : 'Login'}
-                </a>
+                <UserMenu />
               </div>
             </div>
           </div>
         </nav>
 
-        <!-- Contenido de la página -->
-        <main class="p-4 flex flex-wrap">
-          <Header />
-          <div
-            class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:w-1/2 lg:w-2/5 w-full"
-          >
-            <div class="col-span-full">
-              <Panel>
-                <div class="flex items-center justify-between">
-                  <h2>Edad: <span class="text-cyan-500">{user.age} años</span></h2>
-                  <h2>Tiempo entrenando: <span class="text-cyan-500">{yearsTraining} años</span></h2>
-                  <h2>IMC: <span class="text-cyan-500">{IMC}</span></h2>
-                </div>
-              </Panel>
-            </div>
-            {
-              measurements.measurements.map((item) => (
-                <Panel>
-                  <div class="flex flex-col h-25 justify-between">
-                    {" "}
-                    {/* Added fixed height and padding */}
-                    <label class="text-sm font-medium text-gray-400 dark:text-gray-300">
-                      {item.label} ({item.unit}):
-                    </label>
-                    {item.values ? (
-                      <div class="flex flex-col flex-1">
-                        {" "}
-                        {/* Added flex-1 to fill space */}
-                        <div class="flex justify-between pt-3">
-                          <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {item.values.izq}
-                          </span>
-                          <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {item.values.der}
-                          </span>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
-                          <span>
-                            <svg
-                              width="24px"
-                              height="24px"
-                              viewBox="0 0 24 24"
-                              id="left-arrow"
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="text-gray-500 dark:text-gray-400"
-                            >
-                              <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <g id="SVGRepo_iconCarrier">
-                                <path
-                                  id="primary"
-                                  d="M21,12H3M6,9,3,12l3,3"
-                                  style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"
-                                />
-                              </g>
-                            </svg>
-                          </span>
-                          <span>
-                            <svg
-                              fill="#000000"
-                              width="24px"
-                              height="24px"
-                              viewBox="0 0 24 24"
-                              id="left-arrow"
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="text-gray-500 dark:text-gray-400"
-                              transform="matrix(-1, 0, 0, 1, 0, 0)"
-                            >
-                              <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <g id="SVGRepo_iconCarrier">
-                                <path
-                                  id="primary"
-                                  d="M21,12H3M6,9,3,12l3,3"
-                                  style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"
-                                />
-                              </g>
-                            </svg>
-                          </span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div class="flex items-center flex-1">
-                        {" "}
-                        {/* Added flex-1 to fill space */}
-                        <span class="lg:text-4xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                          {item.value}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </Panel>
-              ))
-            }
-          </div>
-
-          <div class="sm:w-1/2 lg:w-3/5 w-full">
-            <Panel>
-              <LineChart client:load />
-            </Panel>
-          </div>
-        </main>
+        <slot />
       </div>
     </div>
     <Modal />

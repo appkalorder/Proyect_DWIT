@@ -1,12 +1,8 @@
 ---
 import DashboardLayout from '@layouts/Dashboard.astro';
+import IndexContent from '@components/indexContent.astro';
 ---
 
-<DashboardLayout>
-    
-    <div class="flex flex-wrap h-full min-h- md:w-1/2 w-full rounded">
-        <div class="w-1/4 mx-auto">
-            
-        </div>
-    </div>
+<DashboardLayout currentPage='index'>
+    <IndexContent />
 </DashboardLayout>
